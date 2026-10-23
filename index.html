@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DimaStore - Toko Online Makanan & Minuman</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">🍔</span><span>Dima<span>Store</span></span></div>
+    <nav>
+      <button class="nav-btn active" data-page="home">Beranda</button>
+      <button class="nav-btn" data-page="orders">Pesanan</button>
+      <button class="nav-btn" data-page="admin">Kelola Menu</button>
+    </nav>
+    <div class="header-actions">
+      <button id="ordersBtn" class="icon-btn" title="Pesanan">📦</button>
+      <button id="cartBtn" class="cart-btn">🛒 <span>Keranjang</span><b id="cartCount">0</b></button>
+    </div>
+  </header>
+
+  <main>
+    <section id="homePage" class="page active-page">
+      <div class="hero">
+        <div>
+          <p class="eyebrow">MENU TERBARU</p>
+          <h1>Lezat, Segar,<br>Siap Dinikmati!</h1>
+          <p class="hero-desc">Temukan berbagai makanan dan minuman favorit dengan mudah melalui DimaStore.</p>
+          <button id="shopNow" class="primary-btn">Pesan Sekarang →</button>
+        </div>
+        <div class="hero-art">
+          <div class="art-circle"></div>
+          <div class="shirt">🍕</div>
+          <div class="shoe">🍔</div>
+        </div>
+      </div>
+
+      <div class="store-layout">
+        <aside class="filters">
+          <h3>Kategori</h3>
+          <label><input type="checkbox" name="category" value="Makanan"> Makanan</label>
+          <label><input type="checkbox" name="category" value="Minuman"> Minuman</label>
+</aside>
+
+        <section class="products-section" id="productsSection">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">MENU</p>
+              <h2>Menu Favorit</h2>
+            </div>
+            <div class="search-sort">
+              <input id="searchInput" type="search" placeholder="Cari makanan atau minuman...">
+              <select id="sortSelect">
+                <option value="default">Urutkan</option>
+                <option value="low">Harga terendah</option>
+                <option value="high">Harga tertinggi</option>
+                <option value="newest">Terbaru</option>
+              </select>
+            </div>
+          </div>
+          <div id="productGrid" class="product-grid"></div>
+          <div id="emptyProducts" class="empty hidden">Produk tidak ditemukan.</div>
+        </section>
+      </div>
+    </section>
+
+    <section id="ordersPage" class="page">
+      <div class="page-title">
+        <p class="eyebrow">RIWAYAT</p>
+        <h1>Pesanan Saya</h1>
+        <p>Lihat pesanan yang sudah dibuat dari browser ini.</p>
+      </div>
+      <div id="ordersList"></div>
+    </section>
+
+    <section id="adminPage" class="page">
+      <div class="page-title">
+        <p class="eyebrow">ADMIN</p>
+        <h1>Kelola Menu</h1>
+        <p>Tambahkan produk baru atau hapus produk yang tidak dijual lagi.</p>
+      </div>
+
+      <div class="admin-layout">
+        <form id="productForm" class="admin-card">
+          <h2>Tambah Menu</h2>
+          <label>Nama Menu <input id="pName" required maxlength="80" placeholder="Contoh: Nasi Goreng Spesial"></label>
+          <div class="two-col">
+            <label>Harga <input id="pPrice" required type="number" min="0" step="500" placeholder="15000"></label>
+            <label>Stok <input id="pStock" required type="number" min="0" step="1" value="10"></label>
+          </div>
+          <div class="two-col">
+            <label>Kategori
+              <select id="pCategory">
+                <option value="Makanan">Makanan</option>
+                <option value="Minuman">Minuman</option>
+              </select>
+            </label>
+          </div>
+<label>Atau Upload Gambar <input id="pFile" type="file" accept="image/*"></label>
+          <label>Deskripsi <textarea id="pDescription" rows="4" placeholder="Deskripsi produk..."></textarea></label>
+          <button id="postProductBtn" class="primary-btn" type="submit">+ Posting Menu</button><p class="form-help">Setelah berhasil, produk langsung muncul di Beranda.</p>
+        </form>
+
+        <div class="admin-card">
+          <h2>Daftar Menu</h2>
+          <div id="adminProducts"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div>
+      <h3>🍔 DimaStore</h3>
+      <p>Toko online sederhana untuk penjualan makanan dan minuman.</p>
+    </div>
+    <div><h4>Layanan Pelanggan</h4><p>FAQ · Kontak · Sosial Media</p>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css" integrity="sha512-x9WwyMYBnlXMNQ6kQ/Lyzu1NqIhLQKL5Oq6xByfXuRj7s9CskyCbLv/1IjqzJmXwFXWr0ov6jBV7Qbc0hh9nHg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+      <p><a href="https://www.instagram.com/sekoteng_hangat.png?stkn=MWVudnA0bzRudnFtMw=="><i class="fa-brands fa-instagram"></i></a></p></div>
+    <div><h4>Newsletter</h4><div class="newsletter"><input placeholder="Email address"><button>Daftar</button></div></div>
+  </footer>
+
+  <div id="cartOverlay" class="overlay hidden"></div>
+  <aside id="cartDrawer" class="drawer">
+    <div class="drawer-head"><h2>Keranjang</h2><button id="closeCart">✕</button></div>
+    <div id="cartItems"></div>
+    <div class="cart-summary">
+      <div><span>Subtotal</span><strong id="cartSubtotal">Rp 0</strong></div>
+      <button id="checkoutBtn" class="primary-btn full">Checkout</button>
+    </div>
+  </aside>
+
+  <div id="checkoutModal" class="modal hidden">
+    <div class="modal-box">
+      <button class="modal-close" id="closeCheckout">✕</button>
+      <p class="eyebrow">CHECKOUT</p>
+      <h2>Data Pengiriman</h2>
+      <form id="checkoutForm">
+        <label>Nama Penerima <input id="buyerName" required maxlength="80"></label>
+        <label>No. WhatsApp / Telepon <input id="buyerPhone" required type="tel" maxlength="20"></label>
+        <label>Alamat Lengkap <textarea id="buyerAddress" required rows="4" placeholder="Jalan, nomor rumah, kelurahan..."></textarea></label>
+        <div class="two-col">
+          <label>Kota/Kabupaten <input id="buyerCity" required></label>
+          <label>Kode Pos <input id="buyerPostal" required inputmode="numeric" maxlength="6"></label>
+        </div>
+        <label>Metode Pembayaran
+          <select id="paymentMethod">
+            <option>COD (Bayar di Tempat)</option>
+            <option>Transfer Bank</option>
+            <option>E-Wallet</option>
+          </select>
+        </label>
+        <div class="checkout-total"><span>Total</span><strong id="checkoutTotal">Rp 0</strong></div>
+        <button class="primary-btn full" type="submit">Buat Pesanan</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
